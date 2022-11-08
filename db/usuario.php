@@ -3,7 +3,6 @@ include_once 'db.php';
 class Usuario extends DB{
     private $nombre;
     private $username;
-    private $contrasenia;
     
     public function __construct()
     {
@@ -16,7 +15,7 @@ class Usuario extends DB{
     public function existeUser($user,$pwd){
         $pass_a_md5 = md5($pwd);
 
-        $query = $this->conn()->prepare('SELECT * FROM usuarios WHERE username = :pwd');
+        $query = $this->conn()->prepare('SELECT * FROM usuario WHERE username = :user AND password = :pwd');
         $query -> execute(['user'=> $user,'pwd'=> $pass_a_md5]);
 
         if($query ->rowCount()){
@@ -30,7 +29,7 @@ class Usuario extends DB{
      * 
      */
     public function crearUsuario($usuario){
-            $query = $this->conn()->prepare('SELECT * FROM usuarios WHERE username = :usuario');
+            $query = $this->conn()->prepare('SELECT * FROM usuario WHERE username = :usuario');
             $query -> execute(['user' => $usuario]);
 
             foreach($query as $usuarioActual){
