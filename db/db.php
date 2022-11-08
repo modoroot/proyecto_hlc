@@ -8,7 +8,6 @@ class DB{
     private $db;
     private $username;
     private $pwd;
-    private $charset;
 
     public function __construct()
     {
@@ -16,14 +15,13 @@ class DB{
         $this->db = 'proyecto_hlc';
         $this->username = 'root';
         $this->pwd = '';
-        $this->charset = 'utf8mb4';
     }
 
     function conn(){
     
         try{
             
-            $conn = "mysql:host=" . $this->hostname . ";dbname=" . $this->db . ";charset=" . $this->charset;
+            $conn = "mysql:host=" . $this->hostname . ";dbname=" . $this->db;
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES   => false,

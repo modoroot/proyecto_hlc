@@ -4,6 +4,6 @@
     $userSession = new Sesion();
     $userSession -> cerrarSesion();
 
-    header("location: ../index.php");
+    header("location: index.php");
 
 ?>
