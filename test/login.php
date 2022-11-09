@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,13 +16,13 @@
         <ul>
             <li>Home</li>
             <li class="cerrar-sesion">
-                <a href="db/logout.php">Cerrar sesión</a>
+                <a href="logout.php">Cerrar sesión</a>
             </li>
         </ul>
     </div>
 
     <section>
-        <h1>Bienvenido <?php ?> </h1>
+        <h1>Bienvenido <?php echo $_SESSION['username']?> </h1>
     </section>
     
 </body>
