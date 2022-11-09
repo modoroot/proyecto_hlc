@@ -1,6 +1,5 @@
 <?php
-session_start();
-$conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se pudo conectar a la DB');
+include_once 'conn.php';
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +29,7 @@ $conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se p
             </div>
             <input type="submit" value="Login" name = "login">
             <div class="signup_link">
-                <label><input type="checkbox" name="recordar" value="Sí" ></label>
+                <label><input type="checkbox" name="recordar" value="Sí" > Recordarme por 30 días</label>
             </div>
         </form>
     </div>
@@ -38,6 +37,7 @@ $conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se p
 
 </html>
 <?php
+
 if (isset($_POST['login'])){
     $username = $_POST['username'];
     $pwd = $_POST['pwd'];
@@ -56,5 +56,11 @@ if (isset($_POST['login'])){
     if(isset($_SESSION['username'])){
         header("Location:login.php");
     }
+}
+
+function recordarLog($user_id){
+    $encriptacion = base64_encode("UaQteh5i4y3dntstemYODEC{$user_id}");
+    //recuerda el usuario por 30 días
+    setcookie("recordarUsuarioCookie", $encriptacion, time()+60*60*24*100, "/");
 }
 ?>
