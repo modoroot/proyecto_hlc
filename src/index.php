@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se pudo conectar');
+$conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se pudo conectar a la DB');
 ?>
 
 <!DOCTYPE html>
@@ -11,18 +11,13 @@ $conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se p
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login HLC</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <div class="center">
         <h1>Hola</h1>
         <form action = "index.php" method="post">
-        <?php
-            if(isset($errorLogin)){
-                echo $errorLogin;
-            }
-        ?>
             <div class="txt_field">
                 <input type="text" name="username" required>
                 <span></span>
@@ -35,7 +30,7 @@ $conn = mysqli_connect('localhost','root','root','proyecto_hlc') or die('No se p
             </div>
             <input type="submit" value="Login" name = "login">
             <div class="signup_link">
-                ¿No tienes usuario?<a href="#"> Registrarse</a>
+                <label><input type="checkbox" name="recordar" value="Sí" ></label>
             </div>
         </form>
     </div>
