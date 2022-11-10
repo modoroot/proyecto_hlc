@@ -1,7 +1,6 @@
 <?php
 function comprobar_login($conn)
 {
-
     if (isset($_SESSION['id'])) {
         $id = $_SESSION['id'];
         $query = "SELECT * FROM usuario WHERE id = '$id'";

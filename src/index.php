@@ -1,7 +1,4 @@
 <?php
-ini_set('session.gc_maxlifetime',10);
-session_set_cookie_params(10);
-session_start();
 
 include "conn.php";
 include "funciones.php";
@@ -21,14 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //comprueba que el número de filas es mayor que 0 (ha entrado con éxito en
             //la DB)
             if (mysqli_num_rows($result) > 0) {
+                //generamos el id de sesión
                 session_start();
-
+                $_SESSION['username'] = $username;
+                //regeneramos un nuevo id una vez ha muerto tras el tiempo determinado
+                //en el fichero sesion.php
+                session_regenerate_id();
+                $sesion = session_id();
                 $datos = mysqli_fetch_assoc($result);
                 $hash = $datos['password'];
                 if (password_verify($password, $hash)) {
                     //redirigimos dentro de la página de login, es decir, ha podido logear
                     //correctamente
                     $_SESSION['id'] = $datos['id'];
+                    //inserta la sesión con el nombre del usuario y el id de la sesión correspondiente
+                    $query = "INSERT INTO session (id,id_session,nombre_usuario) VALUES (NULL,'$sesion','$username')";
+                    $result = mysqli_query($conn, $query);
                     header("Location: login.php");
                     die;
                 } else {
@@ -37,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 echo "error sql";
             }
+
         } else {
-            echo "Campos no válidos";
+            echo "Error en la query";
         }
+
     } else {
         echo "Campos no válidos";
     }

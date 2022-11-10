@@ -1,10 +1,8 @@
 <?php
-ini_set('session.gc_maxlifetime',10);
-session_set_cookie_params(10);
-session_start();
 
+include "sesion.php";
 include "conn.php";
-include "funciones.php" ;
+include "funciones.php";
 
 $datos = comprobar_login($conn);
 
@@ -23,7 +21,7 @@ $datos = comprobar_login($conn);
         <ul>
             <li>Home</li>
             <li>
-                <a href="logout.php">Cerrar sesión</a>
+                <a href="index.php">Cerrar sesión</a>
             </li>
         </ul>
     </div>
