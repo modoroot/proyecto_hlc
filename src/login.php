@@ -17,7 +17,7 @@ $datos = comprobar_login($conn);
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="menu">
+    <div>
         <ul>
             <li>Home</li>
             <li>

@@ -5,23 +5,22 @@ include("conn.php");
 include("funciones.php");
 
 //comprobamos si el usuario ha pulsado el botón de registrar un usuario
-if($_SERVER['REQUEST_METHOD'] == "POST")
-{
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     //guardamos los datos
     $username = $_POST['username'];
     $nombre = $_POST['nombre'];
     $password = $_POST['pwd'];
+    //encriptamos la contraseña
+    $hash = password_hash($password, PASSWORD_DEFAULT);
     //comprobamos que los campos no estuviesen vacíos
-    if(!empty($username) && !empty($nombre) &&!empty($password))
-    {
+    if (!empty($username) && !empty($nombre) && !empty($password)) {
         //sentencia SQL - Inserta el usuario registrado
-        $query = "INSERT INTO usuario (id,nombre,username,password) VALUES (NULL,'$nombre','$username','$password')";
+        $query = "INSERT INTO usuario (id,nombre,username,password) VALUES (NULL,'$nombre','$username','$hash')";
         mysqli_query($conn, $query);
         //Redirige de nuevo a la página ppal
         header("Location: index.php");
         die;
-    }else
-    {
+    } else {
         echo "Campos no válidos";
     }
 }
@@ -30,8 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Registro</title>
     <link rel="stylesheet" href="css/style.css">
@@ -51,11 +49,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             <label>Usuario</label>
         </div>
         <div class="txt_field">
-            <input type="password" name ="pwd" required>
+            <input type="password" name="pwd" required>
             <span></span>
             <label>Contraseña</label>
         </div>
-        <input type="submit" value="Crear registro" name = "login">
+        <input type="submit" value="Crear registro" name="login">
         <div class="signup_link">
             <a href="login.php">Iniciar sesión</a><br>
         </div>
