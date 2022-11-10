@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include("conn.php");
-include("funciones.php");
+include "conn.php";
+include "funciones.php" ;
 
 $datos = comprobar_login($conn);
 

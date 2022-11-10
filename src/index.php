@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include("conn.php");
-include("funciones.php");
+include "conn.php";
+include "funciones.php";
 
 //comprobamos si el usuario ha pulsado el botón de registrar un usuario
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
