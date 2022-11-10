@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <input type="submit" value="Crear registro" name="login">
         <div class="signup_link">
-            <a href="login.php">Iniciar sesión</a><br>
         </div>
     </form>
 </div>
