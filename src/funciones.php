@@ -1,4 +1,8 @@
 <?php
+/**
+ * @param $conn parámetros de conexión
+ * @return datos del usuario en un array
+ */
 function comprobar_login($conn)
 {
     if (isset($_SESSION['id'])) {
