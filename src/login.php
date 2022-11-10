@@ -1,7 +1,12 @@
 <?php
 session_start();
-?>
 
+include("conn.php");
+include("funciones.php");
+
+$datos = comprobar_login($conn);
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,14 +20,14 @@ session_start();
     <div id="menu">
         <ul>
             <li>Home</li>
-            <li class="cerrar-sesion">
+            <li>
                 <a href="logout.php">Cerrar sesión</a>
             </li>
         </ul>
     </div>
 
     <section>
-        <h1>Bienvenido <?php echo $_SESSION['username']?> </h1>
+        <h1>Bienvenido <?php echo $datos['nombre']?> </h1>
     </section>
     
 </body>

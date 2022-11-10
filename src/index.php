@@ -1,5 +1,46 @@
 <?php
-include_once 'conn.php';
+session_start();
+
+include("conn.php");
+include("funciones.php");
+
+//comprobamos si el usuario ha pulsado el botón de registrar un usuario
+if($_SERVER['REQUEST_METHOD'] == "POST") {
+    //guardamos los datos
+    $username = $_POST['username'];
+    $password = $_POST['pwd'];
+    //comprobamos que los campos no estuviesen vacíos
+    if(!empty($username) && !empty($password)){
+        //sentencia SQL - Lee de la DB el usuario de login, comprobando así si existe
+        $query = "SELECT * FROM usuario WHERE username ='$username'";
+        $result = mysqli_query($conn, $query);
+        //comprobamos si result tiene contenido
+        if($result){
+            //comprueba que el número de filas es mayor que 0 (ha entrado con éxito en
+            //la DB)
+            if(mysqli_num_rows($result) > 0) {
+                $datos = mysqli_fetch_assoc($result);
+                //comprobamos si la contraseña es correcta o válida
+                if($datos['password'] == $password){
+                    //redirigimos dentro de la página de login, es decir, ha podido logear
+                    //correctamente
+                    $_SESSION['id'] = $datos['id'];
+                    header("Location: login.php");
+                    die;
+                }else{
+                    echo "error pass";
+                }
+            }else{
+            echo "error sql";
+            }
+        }else {
+            echo "Campos no válidos";
+        }
+    }else
+    {
+        echo "Campos no válidos";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +57,7 @@ include_once 'conn.php';
 <body>
     <div class="center">
         <h1>Hola</h1>
-        <form action = "index.php" method="post">
+        <form method="post">
             <div class="txt_field">
                 <input type="text" name="username" required>
                 <span></span>
@@ -27,40 +68,13 @@ include_once 'conn.php';
                 <span></span>
                 <label>Contraseña</label>
             </div>
-            <input type="submit" value="Login" name = "login">
+            <input type="submit" value="Iniciar sesión" name = "login">
             <div class="signup_link">
-                <label><input type="checkbox" name="recordar" value="Sí" > Recordarme por 30 días</label>
+                <a href="registrar_usuario.php">Registrarse</a><br>
+                <label><input type="checkbox" name="recordar" value="Sí" > Recordarme</label>
             </div>
         </form>
     </div>
 </body>
 
 </html>
-<?php
-
-if (isset($_POST['login'])){
-    $username = $_POST['username'];
-    $pwd = $_POST['pwd'];
-    $select = mysqli_query($conn, "SELECT * FROM usuario WHERE username='$username' AND password='$pwd'");
-    $row = mysqli_fetch_array($select);
-
-    if(is_array($row)){
-        $_SESSION['username'] = $row ['username'];
-        $_SESSION['pwd'] = $row ['password'];
-    }else{
-        echo '<script type = "text/javascript">';
-        echo 'alert("Usuario y/o contraseña erróneos");';
-        echo 'window.location.href = "index.php"';
-        echo '</script>';
-    }
-    if(isset($_SESSION['username'])){
-        header("Location:login.php");
-    }
-}
-
-function recordarLog($user_id){
-    $encriptacion = base64_encode("UaQteh5i4y3dntstemYODEC{$user_id}");
-    //recuerda el usuario por 30 días
-    setcookie("recordarUsuarioCookie", $encriptacion, time()+60*60*24*100, "/");
-}
-?>
