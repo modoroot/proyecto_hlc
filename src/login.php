@@ -21,7 +21,7 @@ $datos = comprobar_login($conn);
         <ul>
             <li>Home</li>
             <li>
-                <a href="index.php">Cerrar sesión</a>
+                <a href="index.php" class="signup_link">Cerrar sesión</a>
             </li>
         </ul>
     </div>

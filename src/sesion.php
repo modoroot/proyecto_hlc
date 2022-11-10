@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 //tiempo que tardará en caducar la sesión actual
 //modificar este valor para probar el funcionamiento del código
@@ -16,6 +17,7 @@ if($sesion_restante > $t){
     header("Location: index.php");
     die;
 }else{
+    //reinicia el contador
     $_SESSION['count'] = 0;
 }
 $_SESSION["timeout"] = time();

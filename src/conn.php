@@ -8,13 +8,13 @@ $host = fgets($ar);
 $user = fgets($ar);
 $pwd = fgets($ar);
 $db = fgets($ar);
-
+//borra espacios en blanco sobrantes
 $host = trim($host);
 $user = trim($user);
 $pwd = trim($pwd);
 $db = trim($db);
 
-//si no funciona, muere la conexión (seguridad)
+//si no funciona, muere la conexión
 if (!$conn = mysqli_connect($host, $user, $pwd, $db)) {
     die("No se pudo conectar a la DB");
 }
