@@ -1,4 +1,6 @@
 <?php
+ini_set('session.gc_maxlifetime',10);
+session_set_cookie_params(10);
 session_start();
 
 include "conn.php";
@@ -19,6 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             //comprueba que el número de filas es mayor que 0 (ha entrado con éxito en
             //la DB)
             if (mysqli_num_rows($result) > 0) {
+                session_start();
+
                 $datos = mysqli_fetch_assoc($result);
                 $hash = $datos['password'];
                 if (password_verify($password, $hash)) {
