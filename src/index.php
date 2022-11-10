@@ -30,16 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 } else {
                     echo "error pass";
                 }
-//                //comprobamos si la contraseña es correcta o válida
-//                if($datos['password'] == $password){
-//                    //redirigimos dentro de la página de login, es decir, ha podido logear
-//                    //correctamente
-//                    $_SESSION['id'] = $datos['id'];
-//                    header("Location: login.php");
-//                    die;
-//                }else{
-//                    echo "error pass";
-//                }
             } else {
                 echo "error sql";
             }
