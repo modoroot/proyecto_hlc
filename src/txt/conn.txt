@@ -1,4 +1,0 @@
-localhost
-root
-root
-proyecto_hlc
