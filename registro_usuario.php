@@ -64,9 +64,9 @@ if (isset($_POST['submit'])) {
         }
         ?>
         <input type="text" name="nombre" placeholder="Introduce tu nombre" class="box" required>
-        <input type="text" name="username" placeholder="enter username" class="box" required>
-        <input type="password" name="password" placeholder="enter password" class="box" required>
-        <input type="password" name="confirmar_password" placeholder="confirm password" class="box" required>
+        <input type="text" name="username" placeholder="Introduce tu usuario" class="box" required>
+        <input type="password" name="password" placeholder="Introduce tu contraseña" class="box" required>
+        <input type="password" name="confirmar_password" placeholder="Confirmar contraseña" class="box" required>
         <input type="file" name="img_perfil" class="box" accept="image/jpg, image/jpeg, image/png">
         <input type="submit" name="submit" value="Registrarse" class="btn">
         <p><a href="login.php">Volver a inicio de sesión</a></p>
