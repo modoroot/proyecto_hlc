@@ -55,7 +55,7 @@ $results = $pager->getData($page, $limit);
         if ($fetch['imagen'] == '') {
             echo '<img src="img/default-avatar.png" alt="avatar por defecto">';
         } else {
-            echo '<img src="img_db/' . $fetch['imagen'] . '">';
+            echo '<img src="public/uploads/' . $fetch['imagen'] . '">';
         }
         ?>
         <!--nombre del usuario-->

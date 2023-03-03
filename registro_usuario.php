@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
     //ruta temporal
     $imagen_tmp_name = $_FILES['img_perfil']['tmp_name'];
     //guarda la imagen de la DB de manera local
-    $imagen_folder = 'img_db/' . $imagen;
+    $imagen_folder = 'public/uploads/' . $imagen;
     //sentencia sql para comprobar si ya existe el usuario en la DB
     $select = mysqli_query($conn, "SELECT * FROM usuario WHERE username = '$username' AND password = '$password'")
     or die('query failed');

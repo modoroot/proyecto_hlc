@@ -40,7 +40,7 @@ if (isset($_POST['act_perfil'])) {
     $act_imagen = $_FILES['act_imagen']['name'];
     $act_imagen_size = $_FILES['act_imagen']['size'];
     $act_imagen_tmp_name = $_FILES['act_imagen']['tmp_name'];
-    $act_image_folder = 'img_db/' . $act_imagen;
+    $act_image_folder = 'public/uploads/' . $act_imagen;
     //actualización de imagen
     if (!empty($act_imagen)) {
         $imagen_update_query = mysqli_query($conn, "UPDATE usuario SET imagen = '$act_imagen' WHERE id = '$user_id'")
@@ -81,7 +81,7 @@ if (isset($_POST['elim_user'])) {
         if ($fetch['imagen'] == '') {
             echo '<img src="img/default-avatar.png">';
         } else {
-            echo '<img src="img_db/' . $fetch['imagen'] . '">';
+            echo '<img src="public/uploads/' . $fetch['imagen'] . '">';
         }
         //Mensaje para posibles errores o confirmaciones
         if (isset($mensaje)) {

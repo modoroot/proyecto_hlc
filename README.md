@@ -1,11 +1,9 @@
-# IMPORTANTE:
-He tenido que rehacer casi todo el proyecto por dificultades a la hora de implementar
-las nuevas funcionalidades
+# ENTREGA 5.2 HLC
+He usado como framework para la validación de un formulario Express. He usado como
+formulario la parte del registro de usuario a la base de datos, incluyendo subida de imágenes.
 
-- En la carpeta sql/ está el script para importar la DB
-
-- En el fichero txt/conn.txt están los parámetros de conexión
-
-- Los permisos de las carpetas deberían ser 777 para que no haya problemas
-
-- Los permisos de los ficheros bastan con los que estén por defecto
+Notas importantes:
+ - Credenciales db y nombre db=> root:root@localhost:3306/proyecto_hlc
+ - Para iniciar el servidor de Express es necesario escribir en la consola ``` nodemon app ``` dentro del directorio padre del proyecto
+ - Para acceder a la página de registro es necesario escribir en la barra de direcciones ``` http://localhost:3000/registro_usuario ```
+ - Se ha cambiado el directorio de subida de imágenes a /public/uploads (el anterior era img_db/)

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2022 a las 21:05:39
+-- Tiempo de generación: 03-03-2023 a las 18:25:04
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -1063,7 +1063,11 @@ INSERT INTO `session` (`id`, `session`, `id_usuario`) VALUES
 (13, '3al3blq6kuuefpu3ig3iso5ehn', 1001),
 (14, 'peon07ushrk1mr54t6qjufqcqb', 1001),
 (15, 'e7efighuekbpc0608nqt4ira6d', 1001),
-(16, 'kd26ek0u0p6mcbgfvj9mr1ol15', 1001);
+(16, 'kd26ek0u0p6mcbgfvj9mr1ol15', 1001),
+(17, '2jc9t1qfr6ls1umhvhhr14be4t', 1001),
+(18, '9cnn8tc03j7dbb7488secrnra8', 1010),
+(19, 'mfkho9q99oboato8rq44fe1nmk', 1010),
+(20, '5dbihuumri4v8908fte3be9cj8', 1010);
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1080,7 @@ CREATE TABLE `usuario` (
   `username` varchar(100) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `imagen` varchar(100) NOT NULL
+  `imagen` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -2086,7 +2090,9 @@ INSERT INTO `usuario` (`id`, `username`, `nombre`, `password`, `imagen`) VALUES
 (998, 'alongsonrp', 'Adelice', '773595715797376c7bd3f2639660edaa', 'http://dummyimage.com/181x100.png/cc0000/ffffff'),
 (999, 'tcornthwaiterq', 'Trenna', '26f7193590d6a896bf6bda8d222e84ae', 'http://dummyimage.com/219x100.png/ff4444/ffffff'),
 (1000, 'esouthernsrr', 'Ezechiel', 'ba43575704533010056b54999bd7fafd', 'http://dummyimage.com/106x100.png/dddddd/000000'),
-(1001, 'root', 'Rootaso', '63a9f0ea7bb98050796b649e85481845', '1129018.jpg');
+(1001, 'root', 'Rootaso', '63a9f0ea7bb98050796b649e85481845', '1129018.jpg'),
+(1010, 'asdasd', 'asdasd', 'a8f5f167f44f4964e6c998dee827110c', 'imagen-1677862312740-111151281.png'),
+(1011, 'asdasdasd', 'asdasdasd', 'a3dcb4d229de6fde0db5686dee47145d', 'imagen-1677863676224-462047005.png');
 
 --
 -- Índices para tablas volcadas
@@ -2126,13 +2132,13 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `session`
 --
 ALTER TABLE `session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1012;
 
 --
 -- Restricciones para tablas volcadas
