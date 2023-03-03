@@ -25,8 +25,7 @@ if (isset($_POST['submit'])) {
     } else {
         if ($password != $confirmar_password) {
             $mensaje[] = 'Las contraseñas no son iguales';
-        }
-         else {
+        } else {
             $insert = mysqli_query($conn, "INSERT INTO usuario(username, nombre, password, imagen)
             VALUES('$username', '$nombre', '$password', '$imagen')") or die('query failed');
             if ($insert) {
@@ -56,17 +55,10 @@ if (isset($_POST['submit'])) {
 <div class="form-container">
     <form action="" method="post" enctype="multipart/form-data">
         <h3>Nuevo registro de usuario</h3>
-        <?php
-        if (isset($mensaje)) {
-            foreach ($mensaje as $mensaje) {
-                echo '<div class="mensaje">' . $mensaje . '</div>';
-            }
-        }
-        ?>
-        <input type="text" name="nombre" placeholder="Introduce tu nombre" class="box" required>
-        <input type="text" name="username" placeholder="Introduce tu usuario" class="box" required>
-        <input type="password" name="password" placeholder="Introduce tu contraseña" class="box" required>
-        <input type="password" name="confirmar_password" placeholder="Confirmar contraseña" class="box" required>
+        <input type="text" name="nombre" placeholder="Introduce tu nombre" class="box">
+        <input type="text" name="username" placeholder="Introduce tu usuario" class="box">
+        <input type="password" name="password" placeholder="Introduce tu contraseña" class="box">
+        <input type="password" name="confirmar_password" placeholder="Confirmar contraseña" class="box">
         <input type="file" name="img_perfil" class="box" accept="image/jpg, image/jpeg, image/png">
         <input type="submit" name="submit" value="Registrarse" class="btn">
         <p><a href="login.php">Volver a inicio de sesión</a></p>
