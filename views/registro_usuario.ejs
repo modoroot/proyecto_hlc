@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Validación de formulario - Express</title>
+    <style>
+        body {
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Registro usuario</h1>
+        <form action="/registrar" method="POST">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" id="nombre" name="nombre" class="form-control"
+                    value="<% if (typeof valores !='undefined' ) { %><%= valores.nombre %><% } %>">
+            </div>
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" id="usuario" name="usuario" class="form-control"
+                    value="<% if (typeof valores !='undefined' ) { %><%= valores.usuario %><% } %>">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control"
+                    value="<% if (typeof valores !='undefined' ) { %><%= valores.password %><% } %>">
+            </div>
+            <div class="mb-3">
+                <label for="confirmarpassword" class="form-label">Confirmar contraseña</label>
+                <input type="password" id="confirmarpassword" name="confirmarpassword" class="form-control"
+                    value="<% if (typeof valores !='undefined' ) { %><%= valores.confirmarpassword %><% } %>">
+            </div>
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen</label>
+                <input type="file" id="imagen" name="imagen" class="form-control"
+                    value="<% if (typeof valores !='undefined' ) { %><%= valores.imagen %><% } %>">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+        <% if (typeof validaciones !='undefined' ) { %>
+            <% validaciones.forEach( (validacion)=> { %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>
+                        <%= validacion.msg %>
+                    </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% }) %>
+                    <% } %>
+    </div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
