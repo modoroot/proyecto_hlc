@@ -16,12 +16,12 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     // Generamos un nombre único para el archivo a subir al servidor utilizando la fecha actual y un número aleatorio
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    const nombreUnico = Date.now() + '-' + Math.round(Math.random() * 1E9)
     // Obtenemos la extensión del archivo a subir al servidor y la concatenamos al nombre del archivo
     const extension = file.mimetype.split('/')[1];
     // Guardamos el nombre del archivo en la variable global uploadedFileName para poder acceder a él desde la función
     // de callback de la consulta SQL
-    uploadedFileName = `${file.fieldname}-${uniqueSuffix}.${extension}`;
+    uploadedFileName = `${file.fieldname}-${nombreUnico}.${extension}`;
     // Enviamos el nombre del archivo a la función de callback de multer para que lo guarde en el servidor
     cb(null, uploadedFileName);
   }
@@ -62,7 +62,7 @@ app.use(express.urlencoded({ extended: true }));
 // Configuramos el middleware para servir archivos estáticos
 app.use(express.static('public'));
 
-// Configuramos el middleware para subir archivos utilizando multer y lo asignamos al campo imagen del formulario
+// Configuramos el middleware para subir archivos al servidor utilizando multer y lo asignamos al campo imagen del formulario
 app.use(upload.single('imagen'));
 
 // Configuramos la ruta para la página de registro de usuario, que muestra el formulario HTML
