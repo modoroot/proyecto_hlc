@@ -62,7 +62,8 @@ if (isset($_POST['submit'])) {
         <input type="text" name="username" placeholder="Introduce tu usuario" class="box" required>
         <input type="password" name="password" placeholder="Introduce tu contraseña" class="box" required>
         <input type="submit" name="submit" value="Iniciar sesión" class="btn">
-        <p><a href="registro_usuario.php">Registrarse</a></p>
+        <!-- Debes tener antes el servidor iniciado (nodemon app) para que funcione el enlace -->
+        <p><a href="http://localhost:3000/registro_usuario">Registrarse</a></p>
     </form>
 </div>
 </body>
