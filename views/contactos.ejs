@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <title>Gestión de contactos</title>
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+   <!-- FontAwesome icons -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+
+<body>
+   <main class="container my-5">
+      <!-- Formulario de contacto -->
+      <section class="row my-5">
+         <!-- Título -->
+         <h1 class="col-sm-12 text-center mb-5">Gestión de contactos</h1>
+         <!-- Formulario -->
+         <form id="contacto-form" class="col-sm-12 col-md-6 mx-auto" action="aniadir_contacto" method="POST">
+            <div class="form-group">
+               <label for="nombre">Nombre</label>
+               <input class="form-control" type="text" id="nombre" name="nombre" placeholder="Introduce tu nombre"
+                  required>
+            </div>
+            <div class="form-group">
+               <label for="telefono">Teléfono</label>
+               <input class="form-control" type="text" id="telefono" name="telefono" placeholder="Introduce tu teléfono"
+                  required>
+            </div>
+            <button class="btn btn-primary" type="submit">Añadir contacto</button>
+         </form>
+      </section>
+      <!-- Sección para mostrar registros -->
+      <section class="row my-5">
+         <!-- Título -->
+         <h2 class="col-sm-12 text-center mb-5">Contactos guardados</h2>
+         <!-- Tabla -->
+         <table id="registros-table" class="table table-striped">
+            <thead>
+               <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Acciones</th>
+               </tr>
+            </thead>
+            <tbody>
+               <% registros.forEach(function(registro) { %>
+                  <tr>
+                     <td>
+                        <%= registro.nombre %>
+                     </td>
+                     <td>
+                        <%= registro.telefono %>
+                     </td>
+                     <td>
+                        <!-- Botón eliminar que guarda un id personalizado que contiene el id del contacto correspondiente -->
+                        <button class="btn btn-danger" data-id="<%= registro.id_contacto %>">Eliminar</button>
+                     </td>
+                  </tr>
+                  <% }); %>
+            </tbody>
+         </table>
+      </section>
+   </main>
+   <script>
+      // Guarda el elemento del botón de eliminar en una constante
+      const botonesEliminar = document.querySelectorAll('.btn-danger');
+      // Recorre el array de botones de eliminar
+      botonesEliminar.forEach((boton) => {
+         // Añade un evento click a cada botón
+         boton.addEventListener('click', (event) => {
+            // Guarda el id del contacto en una constante
+            const id = event.target.getAttribute('data-id');
+            // Envía una petición POST al servidor para eliminar el contacto
+            fetch(`http://localhost:3000/eliminar_contacto/${id}`, { method: 'POST' })
+               // Recarga la página
+               .then(() => location.reload())
+               // Muestra un error en la consola si la petición falla
+               .catch((err) => console.error(err));
+            console.log('Petición de eliminación enviada');
+         });
+      });
+
+   </script>
+</body>
+
+</html>

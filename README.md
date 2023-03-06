@@ -8,3 +8,6 @@ Notas importantes:
  - Para acceder a la página de registro es necesario escribir en la barra de direcciones ``` http://localhost:3000/registro_usuario ```
  - Se ha cambiado el directorio de subida de imágenes a ```public/uploads``` (el anterior era ```img_db/```)
  - El formulario se encuentra en la carpeta ``` views/registro_usuario.ejs ```
+  
+# ENTREGA 6.1 HLC
+## Explicación de la entrega

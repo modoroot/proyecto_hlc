@@ -7,6 +7,9 @@ const mysql = require('mysql');
 const crypto = require('crypto');
 // Importamos el módulo multer para subir archivos
 const multer = require('multer');
+// Agregar icono a mi sitio web [favicon.ico]
+const favicon = require('serve-favicon');
+
 // Variable global para guardar el nombre del archivo a subir al servidor
 let uploadedFileName = '';
 // Configuramos multer para almacenar los archivos en el directorio public/uploads
@@ -27,13 +30,6 @@ const storage = multer.diskStorage({
   }
 })
 
-// Creamos el objeto multer con la configuración de almacenamiento
-const upload = multer({ storage: storage })
-// Creamos el servidor
-const app = express();
-// Importamos el módulo express-validator para validar los datos del formulario
-const { body, validationResult } = require('express-validator');
-
 // Crear una conexión a la base de datos
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -50,9 +46,18 @@ connection.connect((err) => {
   console.log('Conexión a la base de datos establecida');
 });
 
+// Creamos el objeto multer con la configuración de almacenamiento
+const upload = multer({ storage: storage })
+// Creamos el servidor
+const app = express();
+// Importamos el módulo express-validator para validar los datos del formulario
+const { body, validationResult } = require('express-validator');
+
 // Configuramos el middleware para analizar el cuerpo de las solicitudes HTTP
 app.use(express.json());
 
+// Icono de la web
+app.use(favicon(__dirname + '/public/favicon.ico'));
 // Registramos EJS como motor de plantillas para las vistas con extensión ".ejs"
 app.engine('ejs', require('ejs').__express);
 
@@ -68,20 +73,49 @@ app.use(express.urlencoded({ extended: true }));
 // Configuramos el middleware para subir archivos al servidor utilizando multer
 app.use(express.static('public'));
 
-app.use(express.static('./src'));
-
 // Configuramos el middleware para subir archivos al servidor utilizando multer y lo asignamos al campo imagen del formulario
 app.use(upload.single('imagen'));
 
 // Configuramos la ruta por defecto, que muestra las rutas disponibles
 app.get('/', (req, res) => {
-  res.send('Ve a la ruta /registro_usuario para ver el formulario de registro de usuarios o a la ruta /contactos para ver el gestor de contactos');
+  res.render('index');
 });
 
 // Configuramos la ruta para la página de registro de usuario, que muestra el formulario HTML
 app.get('/registro_usuario', (req, res) => {
   res.render('registro_usuario');
 });
+
+// Ruta para obtener todos los contactos
+app.get('/contactos', (req, res) => {
+  connection.query('SELECT * FROM contacto', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('contactos', { registros: result }); // pasar resultado de consulta a la vista
+    }
+  });
+});
+// Elimina un contacto por su id
+app.post('/eliminar_contacto/:id', (req, res) => {
+  // Obtenemos el id del contacto a eliminar
+  const id = req.params.id;
+  // Ejecutamos la consulta para eliminar el contacto
+  connection.query('DELETE FROM contacto WHERE id_contacto = ?', [id], (err, result) => {
+    if (err) {
+      // Si ocurre un error, lo mostramos en la consola y enviamos un mensaje de error al cliente
+      console.log(err);
+      res.status(500).send('Error al eliminar el registro');
+    } else {
+      // Si no ocurre ningún error, mostramos un mensaje en la consola y redirigimos al cliente a la página principal
+      console.log(`Se ha eliminado el registro con ID ${id}`);
+      res.redirect('/');
+    }
+  });
+
+});
+
+
 
 // Configuramos la ruta para procesar las solicitudes POST del formulario
 app.post('/registrar', [
@@ -139,26 +173,44 @@ app.post('/registrar', [
         return;
       }
       // Mostramos un mensaje en la consola si los datos se insertaron correctamente
-      console.log('Datos insertados correctamente');
+      console.log('Datos insertados correctamente => Nombre: ' + valores.nombre + ' | Usuario: ' + valores.usuario);
       // Cerrar la conexión a la base de datos al finalizar la solicitud
-      connection.end((err) => {
-        if (err) {
-          console.error('Error al cerrar la conexión: ' + err.stack);
-          return;
-        }
-        // Enviamos una respuesta con un mensaje de éxito
-        res.send('Registro completado');
-        // Mostramos un mensaje en la consola para indicar que la conexión a la base de datos se cerró correctamente
-        console.log('Conexión a la base de datos cerrada');
+      // connection.end((err) => {
+      //   if (err) {
+      //     console.error('Error al cerrar la conexión: ' + err.stack);
+      //     return;
+      //   }
+      // Redirigimos al usuario al login
+      res.redirect('http://localhost:80/project_hlc/login.php');
 
-      });
+      //   console.log('Conexión a la base de datos cerrada');
+      // });
 
     });
   }
 });
+// Configuramos el post para añadir un contacto
+app.post('/aniadir_contacto', function (req, res) {
+  // Guardamos los datos del formulario en variables
+  const nombre = req.body.nombre;
+  const telefono = req.body.telefono;
+  // Consulta SQL para insertar los datos en la base de datos
+  const query = "INSERT INTO contacto (nombre, telefono) VALUES (?, ?)";
+  // Ejecutamos la consulta SQL para insertar los datos en la base de datos y mostramos un mensaje en la consola en caso de error
+  connection.query(query, [nombre, telefono], function (error, results, fields) {
+    if (error) {
+      // Si hay un error, mostramos un mensaje en la consola y enviamos una respuesta con el error
+      console.error('Error al insertar los datos: ' + error.stack);
+      return;
+    }
+    // Mostramos un mensaje en la consola si los datos se insertaron correctamente
+    console.log('Datos insertados correctamente: ' + nombre + ' || ' + telefono);
+    // Redirigimos al usuario a la página principal de la aplicación web
+    res.redirect('/');
+  });
+});
 
 // Iniciamos el servidor en el puerto 3000 y mostramos un mensaje en la consola para indicar que el servidor está listo
 app.listen(3000, () => {
-  console.log('Servidor iniciado en el puerto 3000 (http://localhost:3000/registro_usuario)');
+  console.log('Servidor iniciado en el puerto 3000 (http://localhost:3000)');
 });
-
