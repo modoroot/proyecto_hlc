@@ -53,17 +53,30 @@ connection.connect((err) => {
 // Configuramos el middleware para analizar el cuerpo de las solicitudes HTTP
 app.use(express.json());
 
+// Registramos EJS como motor de plantillas para las vistas con extensión ".ejs"
+app.engine('ejs', require('ejs').__express);
+
+// Registramos Pug como motor de plantillas para las vistas con extensión ".pug"
+app.engine('pug', require('pug').__express);
+
 // Configuramos la plantilla de vistas que utilizaremos
 app.set('view engine', 'ejs');
 
 // Configuramos el middleware para analizar los datos enviados en formularios HTML
 app.use(express.urlencoded({ extended: true }));
 
-// Configuramos el middleware para servir archivos estáticos
+// Configuramos el middleware para subir archivos al servidor utilizando multer
 app.use(express.static('public'));
+
+app.use(express.static('./src'));
 
 // Configuramos el middleware para subir archivos al servidor utilizando multer y lo asignamos al campo imagen del formulario
 app.use(upload.single('imagen'));
+
+// Configuramos la ruta por defecto, que muestra las rutas disponibles
+app.get('/', (req, res) => {
+  res.send('Ve a la ruta /registro_usuario para ver el formulario de registro de usuarios o a la ruta /contactos para ver el gestor de contactos');
+});
 
 // Configuramos la ruta para la página de registro de usuario, que muestra el formulario HTML
 app.get('/registro_usuario', (req, res) => {
@@ -73,12 +86,18 @@ app.get('/registro_usuario', (req, res) => {
 // Configuramos la ruta para procesar las solicitudes POST del formulario
 app.post('/registrar', [
   // Agregamos validaciones para los campos del formulario utilizando el módulo express-validator
-  // El campo nombre debe tener al menos 5 caracteres
-  body('nombre', 'El nombre debe tener al menos 5 caracteres').exists().isLength({ min: 5 }),
-  // El campo usuario debe tener al menos 5 caracteres
-  body('usuario', 'El usuario debe tener al menos 5 caracteres').exists().isLength({ min: 5 }),
-  // El campo password debe tener al menos 6 caracteres
-  body('password', 'La contraseña debe tener al menos 6 caracteres').exists().isLength({ min: 6 }),
+  body('nombre')
+    .notEmpty().withMessage('Campo nombre: El campo está vacío')
+    .isLength({ min: 5 }).withMessage('Campo nombre: Debe tener al menos 5 caracteres')
+    .isAlpha().withMessage('Campo nombre: Solo se permiten caracteres alfabéticos'),
+
+  // El campo usuario debe tener al menos 4 caracteres
+  body('usuario', 'Campo usuario: debe tener al menos 4 caracteres').exists().isLength({ min: 4 }),
+
+  body('password',)
+    .notEmpty().withMessage('Campo contraseña: El campo está vacío')
+    .isLength({ min: 6 }).withMessage('Campo contraseña: Debe tener al menos 6 caracteres')
+    .matches(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/).withMessage('Campo contraseña: Debe contener al menos una letra y un número'),
   // El campo confirmarpassword debe tener al menos 6 caracteres
   body('confirmarpassword', 'Las contraseñas no coinciden').custom((value, { req }) => {
     // Comparamos el valor del campo confirmarpassword con el valor del campo password
@@ -96,6 +115,7 @@ app.post('/registrar', [
     }
     return true;
   })
+
 ], (req, res) => {
   // Validamos los datos del formulario utilizando el módulo express-validator
   const errors = validationResult(req);

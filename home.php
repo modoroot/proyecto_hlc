@@ -61,35 +61,9 @@ $results = $pager->getData($page, $limit);
         <!--nombre del usuario-->
         <h3><?php echo $fetch['nombre']; ?></h3>
         <a href="actualizar_perfil.php" class="btn">Configurar perfil</a>
+        <a href="http://localhost:3000/contactos" class="btn">Añadir contactos</a>
         <a href="home.php?logout=<?php echo $user_id; ?>" class="delete-btn">Cerrar sesión</a>
     </div>
-</div>
-<div class="container">
-    <div class="col-md-10 col-md-offset-1">
-    <h1>Productos</h1>
-    <table class="table table-striped table-condensed table-bordered table-rounded">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Precio (€)</th>
-            <th>Descripción</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php for ($i = 0; $i < count($results->data); $i++) : ?>
-            <tr>
-                <td><?php echo $results->data[$i]['id_producto']; ?></td>
-                <td><?php echo $results->data[$i]['nombre']; ?></td>
-                <td><?php echo $results->data[$i]['precio_eur']; ?></td>
-                <td><?php echo $results->data[$i]['descripcion']; ?></td>
-            </tr>
-            <!--        finaliza bucle for-->
-        <?php endfor; ?>
-        </tbody>
-    </table>
-        <?php echo $pager->createLinks($links, 'pagination pagination-sm'); ?>
-</div>
 </div>
 
 </body>
