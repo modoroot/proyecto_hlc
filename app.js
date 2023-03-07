@@ -61,9 +61,6 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 // Registramos EJS como motor de plantillas para las vistas con extensión ".ejs"
 app.engine('ejs', require('ejs').__express);
 
-// Registramos Pug como motor de plantillas para las vistas con extensión ".pug"
-app.engine('pug', require('pug').__express);
-
 // Configuramos la plantilla de vistas que utilizaremos
 app.set('view engine', 'ejs');
 
@@ -78,6 +75,7 @@ app.use(upload.single('imagen'));
 
 // Configuramos la ruta por defecto, que muestra las rutas disponibles
 app.get('/', (req, res) => {
+  // Renderizamos la vista index.ejs
   res.render('index');
 });
 
