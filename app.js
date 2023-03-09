@@ -172,12 +172,7 @@ app.post('/registrar', [
       }
       // Mostramos un mensaje en la consola si los datos se insertaron correctamente
       console.log('Datos insertados correctamente => Nombre: ' + valores.nombre + ' | Usuario: ' + valores.usuario);
-      // Cerrar la conexión a la base de datos al finalizar la solicitud
-      // connection.end((err) => {
-      //   if (err) {
-      //     console.error('Error al cerrar la conexión: ' + err.stack);
-      //     return;
-      //   }
+
       // Redirigimos al usuario al login
       res.redirect('http://localhost:80/project_hlc/login.php');
 
